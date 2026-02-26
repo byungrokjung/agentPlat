@@ -1,10 +1,8 @@
-# Supabase Configuration File
-# See: https://supabase.com/docs/guides/cli/config
-
-[project]
-name = "ai-agent-platform"
+# Supabase Configuration
+# https://supabase.com/docs/guides/cli/config
 
 [api]
+enabled = true
 port = 54321
 schemas = ["public", "storage"]
 max_rows = 1000
@@ -14,6 +12,7 @@ port = 54322
 major_version = 15
 
 [studio]
+enabled = true
 port = 54323
 
 [auth]
@@ -23,5 +22,3 @@ jwt_expiry = 3600
 
 [auth.email]
 enable_signup = true
-double_confirm_changes = true
-enable_confirmations = false
