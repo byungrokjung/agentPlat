@@ -1,0 +1,59 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm:*)",
+      "Bash(npm:*)",
+      "Bash(uv:*)",
+      "Bash(python:*)",
+      "Bash(supabase:*)",
+      "Bash(git:*)",
+      "Bash(cat:*)",
+      "Bash(ls:*)",
+      "Bash(cd:*)",
+      "Bash(mkdir:*)",
+      "Bash(rm:*)",
+      "Bash(cp:*)",
+      "Bash(mv:*)",
+      "Read",
+      "Write",
+      "Edit",
+      "Grep",
+      "Glob"
+    ],
+    "deny": []
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ \"$(git branch --show-current 2>/dev/null)\" != \"main\" ] || { echo '{\"block\": true, \"message\": \"main 브랜치에 직접 수정 금지! 새 브랜치를 만들어주세요.\"}' >&2; exit 2; }",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [[ \"$CLAUDE_TOOL_ARG_FILE_PATH\" == *.py ]]; then cd backend && uv run ruff format \"$CLAUDE_TOOL_ARG_FILE_PATH\" 2>/dev/null; fi",
+            "timeout": 10
+          },
+          {
+            "type": "command", 
+            "command": "if [[ \"$CLAUDE_TOOL_ARG_FILE_PATH\" == *.ts || \"$CLAUDE_TOOL_ARG_FILE_PATH\" == *.tsx ]]; then cd frontend && pnpm exec prettier --write \"$CLAUDE_TOOL_ARG_FILE_PATH\" 2>/dev/null; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "env": {
+    "PYTHONPATH": "./backend"
+  }
+}

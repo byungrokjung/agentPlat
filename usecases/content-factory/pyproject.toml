@@ -1,0 +1,12 @@
+[project]
+name = "content-factory"
+version = "0.1.0"
+description = "멀티 에이전트 콘텐츠 파이프라인"
+requires-python = ">=3.10"
+dependencies = [
+    "anthropic>=0.18.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.scripts]
+content-factory = "main:run_pipeline"
