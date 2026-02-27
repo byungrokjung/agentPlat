@@ -52,14 +52,9 @@ export default function Home() {
           </p>
           
           <div className="flex items-center justify-center gap-4">
-            <Link href="/agents/new">
+            <Link href="/playground">
               <Button size="lg" className="bg-violet-600 hover:bg-violet-700 text-white px-8">
-                Create Agent
-              </Button>
-            </Link>
-            <Link href="/agents">
-              <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800">
-                View Agents
+                Get Started
               </Button>
             </Link>
           </div>
