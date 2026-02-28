@@ -103,6 +103,30 @@ CORS_ORIGINS=http://localhost:3000   # 문자열, 콤마 구분 (JSON 배열 아
 - **Pre-Tool-Use**: main 브랜치에서 Edit/Write 시 자동 차단
 - **Post-Tool-Use**: `.py` → ruff format / `.ts .tsx` → prettier 자동 실행
 
+## Verification (필수! 🔴)
+
+**기능 개발 후 반드시 검증 실행:**
+
+```bash
+# Backend 테스트
+cd backend && uv run pytest -v
+
+# Frontend 타입/린트 체크
+cd frontend && pnpm type-check && pnpm lint
+```
+
+**검증 규칙:**
+1. 코드 변경 후 **반드시 테스트 실행**
+2. 테스트 **통과 확인 후** 완료 보고
+3. 실패 시 **수정 후 재테스트**
+4. 새 기능 개발 시 **테스트 코드도 함께 작성**
+
+**커스텀 명령어:**
+- `/test` — 전체 테스트 실행 및 리포트
+- `/verify` — verify-app 에이전트로 앱 전체 검증
+
+---
+
 ## Skills & Commands
 
 상세 개발 패턴은 `.claude/skills/`에 정의됨 (필요 시 자동 로드):
@@ -118,3 +142,12 @@ CORS_ORIGINS=http://localhost:3000   # 문자열, 콤마 구분 (JSON 배열 아
 - `/new-component` — 새 React 컴포넌트 생성
 - `/new-migration` — 새 DB 마이그레이션 생성
 - `/review` — 코드 리뷰 실행
+- `/test` — 전체 테스트 실행 및 결과 리포트
+- `/verify` — 앱 전체 검증 (verify-app 에이전트)
+
+서브에이전트 (`.claude/agents/`):
+
+- `planner` — 작업 계획 수립
+- `researcher` — 코드베이스 조사
+- `reviewer` — 코드 리뷰
+- `verify-app` — 프론트/백엔드 앱 검증
